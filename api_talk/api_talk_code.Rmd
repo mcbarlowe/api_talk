@@ -1,0 +1,42 @@
+
+Hit the API
+```{r}
+library(httr)
+query<-list(agg="no", team='', player='', season='2020', toc='')
+resp<-GET("https://stats.theseventhman.net/stats/api/v1/players/",query=query)
+```
+
+Check to see what response we have
+```{r}
+http_type(resp)
+```
+
+Parse the response into test
+```{r}
+jsonRespText<-content(resp,as="text") 
+```
+
+Some other R crap I looked up not sure what it does here
+```{r}
+jsonRespParsed<-content(resp,as="parsed") 
+```
+
+Convert to data.frame
+```{r}
+library(jsonlite)
+data_dataframe <- fromJSON(jsonRespText)
+
+```
+
+To convert things to tidyverse world for you no base R heathens
+```{r}
+library(tibble)
+tidy_data <- as_tibble(data_dataframe)
+```
+
+
+```{r}
+print(tidy_data)
+
+```
+
